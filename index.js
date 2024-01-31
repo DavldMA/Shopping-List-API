@@ -34,7 +34,7 @@ app.use(express.json());
 
 
 */
-app.post("/", function(req,res,next){
+app.get("/", function(req,res,next){
     res.json({"as":"as"})
     console.log(req.body);
 })

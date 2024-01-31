@@ -1,20 +1,13 @@
 const express = require("express");
-
 const app = express();
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-
-
 /*
-
  Users : username / email / password 
  Lists : name / array(items) items -> (name/quantities) /   
  
- 
  to save locally (lists if not logged in and maybe products inserted previosly)
-
 
  API
 
@@ -44,4 +37,4 @@ app.post("/login", function(req,res,next){
     console.log(req.body);
 })
 
-app.listen(8801, () => console.log("started"))
+app.listen(8801, () => {console.log("started")})

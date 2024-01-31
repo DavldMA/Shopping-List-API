@@ -35,7 +35,7 @@ app.use(express.json());
 
 */
 app.post("/", function(req,res,next){
-    res.send({"as":"as"})
+    res.json({"as":"as"})
     console.log(req.body);
 })
 

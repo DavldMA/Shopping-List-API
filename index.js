@@ -34,18 +34,14 @@ app.use(express.json());
 
 
 */
-
-
-app.post("/login", function(req,res,next){
-    console.log();
-
-
+app.post("/", function(req,res,next){
+    res.send({"as":"as"})
+    console.log(req.body);
 })
 
 
-
-
-
-
+app.post("/login", function(req,res,next){
+    console.log(req.body);
+})
 
 app.listen(8801, () => console.log("started"))

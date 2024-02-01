@@ -51,7 +51,7 @@ async function addUser(user) {
         const userCollection = db.collection(userListCollection);
         await userCollection.insertOne(user);
         await disconnectFromMongoDB();
-        return { "SUCCESSFUL:": "001." };
+        return { "SUCCESSFUL:": "001" };
     } else {
         await disconnectFromMongoDB();
         if (existingUser) {
@@ -61,6 +61,27 @@ async function addUser(user) {
         }
     }
 }
+
+async function login(user) {
+    const db = await connectToMongoDB();
+
+    const existingUser = await getUserInfo(db, 'email', user.email);
+
+    if (existingUser) {
+        if (user.password === existingUser.password) {
+            await disconnectFromMongoDB();
+            return { "username:": existingUser.username };
+        } else {
+            await disconnectFromMongoDB();
+            return { "ERROR:": "004" }; //
+        }
+    } else {
+        await disconnectFromMongoDB();
+        return { "ERROR:": "005" }; //Email not found.
+    }
+}
+
+
 
 async function addList(db, list) {
     const existingList = await getListInfo(db, list.name);
@@ -151,5 +172,6 @@ module.exports = {
     connectToMongoDB,
     disconnectFromMongoDB,
     main,
-    addUser
+    addUser,
+    login
 };

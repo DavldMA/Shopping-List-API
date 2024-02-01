@@ -49,9 +49,8 @@ app.get("/list/:value", function(req,res,next){
 })
 
 app.post("/user/login", async function(req,res,next){
-    
-    console.log(req.body);
-    //db.connectToMongoDB()
+    const message = await db.login(req.body);
+    res.json(message);
 })
 
 app.post("/user/register", async function(req,res,next){

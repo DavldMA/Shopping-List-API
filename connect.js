@@ -42,22 +42,22 @@ async function disconnectFromMongoDB() {
 async function addUser(user) {
     const db = await connectToMongoDB();
 
-    const existingUser = await getUserInfo(db, user.username);
-    const existingEmail = await getUserInfo(db, user.email);
-    console.log(existingUser)
-    console.log(existingEmail)
+    const existingUser = await getUserInfo(db, 'username', user.username);
+    const existingEmail = await getUserInfo(db, 'email', user.email);
+    console.log(existingUser);
+    console.log(existingEmail);
 
     if (!existingUser && !existingEmail) {
         const userCollection = db.collection(userListCollection);
         await userCollection.insertOne(user);
         await disconnectFromMongoDB();
-        return {"SUCCESSFUL:" : "001."};
+        return { "SUCCESSFUL:": "001." };
     } else {
         await disconnectFromMongoDB();
         if (existingUser) {
-            return {"ERROR:" : "002"}; //This username already exists.
+            return { "ERROR:": "002" }; // This username already exists.
         } else if (existingEmail) {
-            return {"ERROR:" :  "003"}; //This email already exists.
+            return { "ERROR:": "003" }; // This email already exists.
         }
     }
 }
@@ -80,9 +80,9 @@ async function addProduct(db, product) {
     }
 }
 
-async function getUserInfo(db, value) {
+async function getUserInfo(db, field, value) {
     const userCollection = db.collection(userListCollection);
-    return await userCollection.findOne({ value });
+    return await userCollection.findOne({ [field]: value });
 }
 
 async function getUserInfoWithLists(db, username) {

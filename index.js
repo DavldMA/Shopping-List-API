@@ -55,6 +55,7 @@ app.get("/list/all", async function(req,res,next){
 
 app.post("/user/login", async function(req,res,next){
     const message = await db.login(req.body);
+    console.log(message);
     res.json(message);
 })
 

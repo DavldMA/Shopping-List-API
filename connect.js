@@ -109,7 +109,7 @@ async function main() {
 
     await disconnectFromMongoDB();
 
-    return userInfoWithLists
+    return userInfoWithLists[0]['lists']
 
     const user = {
         username: 'john_doe',

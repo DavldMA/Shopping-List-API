@@ -44,6 +44,8 @@ async function addUser(user) {
 
     const existingUser = await getUserInfo(db, user.username);
     const existingEmail = await getUserInfo(db, user.email);
+    console.log(existingUser)
+    console.log(existingEmail)
 
     if (!existingUser && !existingEmail) {
         const userCollection = db.collection(userListCollection);

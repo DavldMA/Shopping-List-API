@@ -10,7 +10,12 @@ const client = new MongoClient(uri, {
     }
 });
 
-const databaseName = 'url';
+const databaseName = 'shoplistdb';
+
+// Collection names
+const userListCollection = 'users';
+const listCollection = 'lists';
+const productCollection = 'products';
 
 async function connectToMongoDB() {
     try {
@@ -34,46 +39,54 @@ async function disconnectFromMongoDB() {
     }
 }
 
-async function findRedirectURLByShortId(shortId) {
-    try {
-        await connectToMongoDB()
-        const collectionName = "url"
-        const db = client.db(databaseName);
-        const collection = db.collection(collectionName);
-
-        const query = { shortId };
-        const result = await collection.findOne(query);
-        if (result.redirectURL) {
-            return result.redirectURL;
-        } else {
-            console.log(`ShortId ${shortId} not found in the database.`);
-            return null;
-        }
-    } catch (err) {
-        console.error('Error finding redirect URL:', err);
-        return null;
-    }
-    finally{
-        await disconnectFromMongoDB();
-    }
+async function addUser(db, user) {
+    const userCollection = db.collection(userListCollection);
+    await userCollection.insertOne(user);
 }
 
-async function deleteAllDocumentsInUrlCollection() {
-    try {
-        const collectionName = "url";
-        const db = client.db(databaseName);
-        const collection = db.collection(collectionName);
+async function addList(db, list) {
+    const listCollection = db.collection(listCollection);
+    await listCollection.insertOne(list);
+}
 
-        const deleteResult = await collection.deleteMany({});
-        console.log(`Deleted ${deleteResult.deletedCount} documents in the "${collectionName}" collection.`);
-    } catch (err) {
-        console.error('Error deleting documents in the "url" collection:', err);
-    }
+async function addProduct(db, product) {
+    const productCollection = db.collection(productCollection);
+    await productCollection.insertOne(product);
+}
+
+// Example usage:
+async function main() {
+    const db = await connectToMongoDB();
+
+    // Example entries
+    const user = {
+        username: 'john_doe',
+        email: 'john@example.com',
+    };
+
+    const list = {
+        name: 'Shopping List 1',
+        users: [user.username],
+        products: ['Milk', 'Bread', 'Eggs'],
+    };
+
+    const product = {
+        name: 'Milk',
+        category: 'Dairy',
+        price: 2.5,
+    };
+
+    // Insert entries
+    await addUser(db, user);
+    await addList(db, list);
+    await addProduct(db, product);
+
+    // Disconnect from MongoDB
+    await disconnectFromMongoDB();
 }
 
 module.exports = {
     connectToMongoDB,
     disconnectFromMongoDB,
-    findRedirectURLByShortId,
-    deleteAllDocumentsInUrlCollection
+    main
 };

@@ -37,7 +37,8 @@ app.get("/", function(req,res,next){
 })
 
 app.get("/login", function(req,res,next){
-    db.connectToMongoDB()
+    db.main()
+    res.json({"test":"maybe"})
 })
 
 

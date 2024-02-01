@@ -59,6 +59,11 @@ async function addProduct(db, product) {
     await productCollection.insertOne(product);
 }
 
+async function getUserInfo(db, username) {
+    const userCollection = db.collection(userListCollection);
+    return await userCollection.findOne({ username });
+}
+
 // Example usage:
 async function main() {
     const db = await connectToMongoDB();

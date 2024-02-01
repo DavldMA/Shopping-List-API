@@ -36,6 +36,18 @@ app.get("/", function(req,res,next){
     res.json({"as":"as"})
 })
 
+app.get("/user/:username", function(req,res,next){
+    res.json({"as":"as"})
+})
+
+app.get("/product/:name", function(req,res,next){
+    res.json({"as":"as"})
+})
+
+app.get("/product/:list", function(req,res,next){
+    res.json({"as":"as"})
+})
+
 app.get("/login", async function(req,res,next){
     var xd = await db.main()
     res.json(xd)

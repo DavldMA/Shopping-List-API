@@ -71,6 +71,23 @@ async function getUserInfo(db, username) {
     return await userCollection.findOne({ username });
 }
 
+async function getUserInfoWithLists(db, username) {
+    const userCollection = db.collection(userListCollection);
+    return await userCollection.aggregate([
+        {
+            $match: { username: username }
+        },
+        {
+            $lookup: {
+                from: listListCollection,
+                localField: 'username',
+                foreignField: 'users',
+                as: 'lists'
+            }
+        }
+    ]).toArray();
+}
+
 async function getListInfo(db, name) {
     const listCollection = db.collection(listListCollection);
     return await listCollection.findOne({ name });
@@ -81,11 +98,19 @@ async function getProductInfo(db, name) {
     return await productCollection.findOne({ name });
 }
 
-// Example usage:
+
+
+
 async function main() {
     const db = await connectToMongoDB();
 
-    // Example entries
+    const username = 'john_doe';
+    const userInfoWithLists = await getUserInfoWithLists(db, username);
+
+    await disconnectFromMongoDB();
+
+    return userInfoWithLists
+
     const user = {
         username: 'john_doe',
         email: 'john@example.com',
@@ -99,24 +124,13 @@ async function main() {
         quantity: 2
     };
 
-
-
-    // Insert entries
-    await addUser(db, user);
-    await addProduct(db, product);
-    const retrievedProduct = await getProductInfo(db, "Milk");
-    const retrievedUser = await getUserInfo(db, 'john_doe');
-    console.log(retrievedProduct);
     const list = {
         name: 'Shopping List 1',
         users: [user.username],
         products: [retrievedProduct.name],
         productQuantity: [1]
     };
-    await addList(db, list);
-    await disconnectFromMongoDB();
-    return retrievedUser
-    
+
 }
 
 module.exports = {

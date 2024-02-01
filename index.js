@@ -36,9 +36,9 @@ app.get("/", function(req,res,next){
     res.json({"as":"as"})
 })
 
-app.get("/login", function(req,res,next){
-    db.main()
-    res.json({"test":"maybe"})
+app.get("/login", async function(req,res,next){
+    var xd = await db.main()
+    res.json(xd)
 })
 
 

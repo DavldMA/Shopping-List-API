@@ -85,7 +85,8 @@ async function main() {
     await addUser(db, user);
     await addList(db, list);
     await addProduct(db, product);
-
+    const retrievedUser = await getUserInfo(db, 'john_doe');
+    return retrievedUser
     // Disconnect from MongoDB
     await disconnectFromMongoDB();
 }

@@ -93,7 +93,7 @@ async function main() {
     await addProduct(db, product);
     const retrievedProduct = await getProductInfo(db, 'john_doe');
     const retrievedUser = await getUserInfo(db, 'john_doe');
-
+    console.log(retrievedProduct);
     await disconnectFromMongoDB();
     return retrievedUser
     

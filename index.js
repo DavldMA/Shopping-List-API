@@ -26,8 +26,12 @@ app.use(express.json());
  pages for everything
 
 
+
+ username
+ token
+
 */
-app.get("/", function(req,res,next){
+app.get("/register", function(req,res,next){
     res.json({"as":"as"})
     console.log(req.body);
 })

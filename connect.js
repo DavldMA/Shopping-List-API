@@ -14,8 +14,8 @@ const databaseName = 'shoplistdb';
 
 // Collection names
 const userListCollection = 'users';
-const listCollection = 'lists';
-const productCollection = 'products';
+const listListCollection = 'lists';
+const productListCollection = 'products';
 
 async function connectToMongoDB() {
     try {
@@ -45,12 +45,12 @@ async function addUser(db, user) {
 }
 
 async function addList(db, list) {
-    const listCollection = db.collection(listCollection);
+    const listCollection = db.collection(listListCollection);
     await listCollection.insertOne(list);
 }
 
 async function addProduct(db, product) {
-    const productCollection = db.collection(productCollection);
+    const productCollection = db.collection(productListCollection);
     await productCollection.insertOne(product);
 }
 

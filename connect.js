@@ -51,13 +51,13 @@ async function addUser(user) {
         const userCollection = db.collection(userListCollection);
         await userCollection.insertOne(user);
         await disconnectFromMongoDB();
-        return { "CODE:": "001" };
+        return { "CODE": "001" };
     } else {
         await disconnectFromMongoDB();
         if (existingUser) {
-            return { "CODE:": "002" }; // This username already exists.
+            return { "CODE": "002" }; // This username already exists.
         } else if (existingEmail) {
-            return { "CODE:": "003" }; // This email already exists.
+            return { "CODE": "003" }; // This email already exists.
         }
     }
 }
@@ -73,11 +73,11 @@ async function login(user) {
             return { "CODE": "001" , "username:": existingUser.username };
         } else {
             await disconnectFromMongoDB();
-            return { "CODE:": "004" }; //
+            return { "CODE": "004" }; //
         }
     } else {
         await disconnectFromMongoDB();
-        return { "CODE:": "005" }; //Email not found.
+        return { "CODE": "005" }; //Email not found.
     }
 }
 

@@ -93,12 +93,7 @@ async function main() {
     await addProduct(db, product);
     const retrievedProduct = await getProductInfo(db, 'john_doe');
     const retrievedUser = await getUserInfo(db, 'john_doe');
-    const list = {
-        name: 'Shopping List 1',
-        users: [user.username],
-        products: [retrievedProduct._id],
-    };
-    await addList(db, list);
+
     await disconnectFromMongoDB();
     return retrievedUser
     

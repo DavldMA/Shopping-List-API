@@ -24,6 +24,11 @@ async function connectToMongoDB() {
 
         const db = client.db(databaseName);
 
+        // Create collections if they don't exist
+        await db.createCollection(userListCollection);
+        await db.createCollection(listCollection);
+        await db.createCollection(productCollection);
+
         return db;
     } catch (err) {
         console.error('Error connecting to MongoDB:', err);

@@ -1,4 +1,5 @@
 const express = require("express");
+const db = require("./connect")
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -31,14 +32,17 @@ app.use(express.json());
  token
 
 */
-app.get("/register", function(req,res,next){
+app.get("/", function(req,res,next){
     res.json({"as":"as"})
-    console.log(req.body);
+})
+
+app.get("/login", function(req,res,next){
+    db.connectToMongoDB()
 })
 
 
 app.post("/login", function(req,res,next){
-    console.log(req.body);
+    db.connectToMongoDB()
 })
 
 app.listen(8801, () => {console.log("started")})

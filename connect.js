@@ -49,13 +49,21 @@ async function addUser(db, user) {
 }
 
 async function addList(db, list) {
-    const listCollection = db.collection(listListCollection);
-    await listCollection.insertOne(list);
+    const existingList = await getListInfo(db, list.name);
+
+    if (!existingList) {
+        const listCollection = db.collection(listListCollection);
+        await listCollection.insertOne(list);
+    }
 }
 
 async function addProduct(db, product) {
-    const productCollection = db.collection(productListCollection);
-    await productCollection.insertOne(product);
+    const existingProduct = await getProductInfo(db, product.name);
+
+    if (!existingProduct) {
+        const productCollection = db.collection(productListCollection);
+        await productCollection.insertOne(product);
+    }
 }
 
 async function getUserInfo(db, username) {
@@ -63,9 +71,14 @@ async function getUserInfo(db, username) {
     return await userCollection.findOne({ username });
 }
 
-async function getProductInfo(db, product) {
+async function getListInfo(db, name) {
+    const listCollection = db.collection(listListCollection);
+    return await listCollection.findOne({ name });
+}
+
+async function getProductInfo(db, name) {
     const productCollection = db.collection(productListCollection);
-    return await productCollection.findOne({ product });
+    return await productCollection.findOne({ name });
 }
 
 // Example usage:
@@ -83,7 +96,7 @@ async function main() {
         name: 'Milk',
         ptName: 'Leite',
         category: 'Dairy',
-        quantity: 2,
+        quantity: 2
     };
 
 
@@ -91,9 +104,16 @@ async function main() {
     // Insert entries
     await addUser(db, user);
     await addProduct(db, product);
-    const retrievedProduct = await getProductInfo(db, product);
+    const retrievedProduct = await getProductInfo(db, "Milk");
     const retrievedUser = await getUserInfo(db, 'john_doe');
     console.log(retrievedProduct);
+    const list = {
+        name: 'Shopping List 1',
+        users: [user.username],
+        products: [retrievedProduct.name],
+        productQuantity: [1]
+    };
+    await addList(db, list);
     await disconnectFromMongoDB();
     return retrievedUser
     

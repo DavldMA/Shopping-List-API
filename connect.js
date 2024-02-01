@@ -91,7 +91,7 @@ async function main() {
     // Insert entries
     await addUser(db, user);
     await addProduct(db, product);
-    const retrievedProduct = await getProductInfo(db, 'john_doe');
+    const retrievedProduct = await getProductInfo(db, product);
     const retrievedUser = await getUserInfo(db, 'john_doe');
     console.log(retrievedProduct);
     await disconnectFromMongoDB();

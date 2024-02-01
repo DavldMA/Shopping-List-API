@@ -39,18 +39,23 @@ async function disconnectFromMongoDB() {
     }
 }
 
-async function addUser(db, user) {
+async function addUser(user) {
+    const db = await connectToMongoDB();
+
     const existingUser = await getUserInfo(db, user.username);
     const existingEmail = await getUserInfo(db, user.email);
 
     if (!existingUser && !existingEmail) {
         const userCollection = db.collection(userListCollection);
         await userCollection.insertOne(user);
+        await disconnectFromMongoDB();
+        return {"SUCCESSFUL:" : "001."};
     } else {
+        await disconnectFromMongoDB();
         if (existingUser) {
-            return "ERROR: This username already exists.";
+            return {"ERROR:" : "002"}; //This username already exists.
         } else if (existingEmail) {
-            return "ERROR: This email already exists.";
+            return {"ERROR:" :  "003"}; //This email already exists.
         }
     }
 }
@@ -143,5 +148,6 @@ async function main() {
 module.exports = {
     connectToMongoDB,
     disconnectFromMongoDB,
-    main
+    main,
+    addUser
 };

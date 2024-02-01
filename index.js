@@ -65,7 +65,8 @@ app.get("/user/register/:value", async function(req,res,next){
 })
 
 app.post("/user/register", async function(req,res,next){
-    db.connectToMongoDB()
+    const message = await db.addUser(req.body);
+    res.json(message)
 })
 
 app.listen(8801, () => {console.log("started")})

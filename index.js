@@ -48,20 +48,10 @@ app.get("/list/:value", function(req,res,next){
     res.json({"as":"as"})
 })
 
-app.get("/user/login/:value", async function(req,res,next){
-    var xd = await db.main()
-    res.json(xd)
-})
-
 app.post("/user/login", async function(req,res,next){
     
     console.log(req.body);
     //db.connectToMongoDB()
-})
-
-app.get("/user/register/:value", async function(req,res,next){
-    var xd = await db.main()
-    res.json(xd)
 })
 
 app.post("/user/register", async function(req,res,next){

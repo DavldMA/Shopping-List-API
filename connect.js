@@ -40,8 +40,12 @@ async function disconnectFromMongoDB() {
 }
 
 async function addUser(db, user) {
-    const userCollection = db.collection(userListCollection);
-    await userCollection.insertOne(user);
+    const existingUser = await getUserInfo(db, user.username);
+
+    if (!existingUser) {
+        const userCollection = db.collection(userListCollection);
+        await userCollection.insertOne(user);
+    }
 }
 
 async function addList(db, list) {
@@ -67,6 +71,7 @@ async function main() {
     const user = {
         username: 'john_doe',
         email: 'john@example.com',
+        password: '123_Se'
     };
 
     const list = {
@@ -78,7 +83,7 @@ async function main() {
     const product = {
         name: 'Milk',
         category: 'Dairy',
-        price: 2.5,
+        quantity: 2,
     };
 
     // Insert entries

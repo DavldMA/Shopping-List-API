@@ -24,11 +24,6 @@ async function connectToMongoDB() {
 
         const db = client.db(databaseName);
 
-        // Create collections if they don't exist
-        await db.createCollection(userListCollection);
-        await db.createCollection(listCollection);
-        await db.createCollection(productCollection);
-
         return db;
     } catch (err) {
         console.error('Error connecting to MongoDB:', err);
@@ -91,9 +86,9 @@ async function main() {
     await addList(db, list);
     await addProduct(db, product);
     const retrievedUser = await getUserInfo(db, 'john_doe');
-    return retrievedUser
-    // Disconnect from MongoDB
     await disconnectFromMongoDB();
+    return retrievedUser
+    
 }
 
 module.exports = {

@@ -48,6 +48,11 @@ app.get("/list/:value", function(req,res,next){
     res.json({"as":"as"})
 })
 
+app.get("/list/all", async function(req,res,next){
+    const message = await db.getAllListsByUsername(req.body.username);
+    res.json(message);
+})
+
 app.post("/user/login", async function(req,res,next){
     const message = await db.login(req.body);
     res.json(message);

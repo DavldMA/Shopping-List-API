@@ -136,10 +136,9 @@ async function getProductInfo(db, value) {
 
 
 
-async function main() {
+async function getAllListsByUsername(username) {
     const db = await connectToMongoDB();
 
-    const username = 'john_doe';
     const userInfoWithLists = await getUserInfoWithLists(db, username);
 
     await disconnectFromMongoDB();
@@ -171,7 +170,7 @@ async function main() {
 module.exports = {
     connectToMongoDB,
     disconnectFromMongoDB,
-    main,
+    getAllListsByUsername,
     addUser,
     login
 };

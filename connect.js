@@ -63,6 +63,11 @@ async function getUserInfo(db, username) {
     return await userCollection.findOne({ username });
 }
 
+async function getProductInfo(db, product) {
+    const productCollection = db.collection(productListCollection);
+    return await productCollection.findOne({ product });
+}
+
 // Example usage:
 async function main() {
     const db = await connectToMongoDB();
@@ -74,23 +79,26 @@ async function main() {
         password: '123_Se'
     };
 
-    const list = {
-        name: 'Shopping List 1',
-        users: [user.username],
-        products: ['Milk', 'Bread', 'Eggs'],
-    };
-
     const product = {
         name: 'Milk',
+        ptName: 'Leite',
         category: 'Dairy',
         quantity: 2,
     };
 
+
+
     // Insert entries
     await addUser(db, user);
-    await addList(db, list);
     await addProduct(db, product);
+    const retrievedProduct = await getProductInfo(db, 'john_doe');
     const retrievedUser = await getUserInfo(db, 'john_doe');
+    const list = {
+        name: 'Shopping List 1',
+        users: [user.username],
+        products: [retrievedProduct._id],
+    };
+    await addList(db, list);
     await disconnectFromMongoDB();
     return retrievedUser
     

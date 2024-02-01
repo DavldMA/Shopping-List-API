@@ -54,7 +54,9 @@ app.get("/user/login/:value", async function(req,res,next){
 })
 
 app.post("/user/login", async function(req,res,next){
-    db.connectToMongoDB()
+
+    console.log(req.body);
+    //db.connectToMongoDB()
 })
 
 app.get("/user/register/:value", async function(req,res,next){

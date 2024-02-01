@@ -41,10 +41,17 @@ async function disconnectFromMongoDB() {
 
 async function addUser(db, user) {
     const existingUser = await getUserInfo(db, user.username);
+    const existingEmail = await getUserInfo(db, user.email);
 
-    if (!existingUser) {
+    if (!existingUser && !existingEmail) {
         const userCollection = db.collection(userListCollection);
         await userCollection.insertOne(user);
+    } else {
+        if (existingUser) {
+            return "ERROR: This username already exists.";
+        } else if (existingEmail) {
+            return "ERROR: This email already exists.";
+        }
     }
 }
 
@@ -66,9 +73,9 @@ async function addProduct(db, product) {
     }
 }
 
-async function getUserInfo(db, username) {
+async function getUserInfo(db, value) {
     const userCollection = db.collection(userListCollection);
-    return await userCollection.findOne({ username });
+    return await userCollection.findOne({ value });
 }
 
 async function getUserInfoWithLists(db, username) {
@@ -88,14 +95,14 @@ async function getUserInfoWithLists(db, username) {
     ]).toArray();
 }
 
-async function getListInfo(db, name) {
+async function getListInfo(db, value) {
     const listCollection = db.collection(listListCollection);
-    return await listCollection.findOne({ name });
+    return await listCollection.findOne({ value });
 }
 
-async function getProductInfo(db, name) {
+async function getProductInfo(db, value) {
     const productCollection = db.collection(productListCollection);
-    return await productCollection.findOne({ name });
+    return await productCollection.findOne({ value });
 }
 
 

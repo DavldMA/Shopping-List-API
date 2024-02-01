@@ -36,25 +36,33 @@ app.get("/", function(req,res,next){
     res.json({"as":"as"})
 })
 
-app.get("/user/:username", function(req,res,next){
+app.get("/user/:value", function(req,res,next){
     res.json({"as":"as"})
 })
 
-app.get("/product/:name", function(req,res,next){
+app.get("/product/:value", function(req,res,next){
     res.json({"as":"as"})
 })
 
-app.get("/product/:list", function(req,res,next){
+app.get("/list/:value", function(req,res,next){
     res.json({"as":"as"})
 })
 
-app.get("/login", async function(req,res,next){
+app.get("/user/login/:value", async function(req,res,next){
     var xd = await db.main()
     res.json(xd)
 })
 
+app.post("/user/login", async function(req,res,next){
+    db.connectToMongoDB()
+})
 
-app.post("/login", function(req,res,next){
+app.get("/user/register/:value", async function(req,res,next){
+    var xd = await db.main()
+    res.json(xd)
+})
+
+app.post("/user/register", async function(req,res,next){
     db.connectToMongoDB()
 })
 

@@ -144,7 +144,7 @@ async function getAllListsByUsername(username) {
 
     const userInfoWithLists = await getUserInfoWithLists(username);
     console.log(userInfoWithLists)
-    return userInfoWithLists
+    return userInfoWithLists[0]["lists"]
 
 }
 

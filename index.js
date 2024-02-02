@@ -30,9 +30,9 @@ app.post("/list/add", async function(req,res,next){
 })
 
 app.get("/list/all", async function(req,res,next){
-    console.log(req.body)
-    console.log(req.body.username)
-    const message = await db.getAllListsByUsername(req.body.username);
+    console.log(req.query)
+    console.log(req.query.username)
+    const message = await db.getAllListsByUsername(req.query.username);
     res.json(message);
 })
 

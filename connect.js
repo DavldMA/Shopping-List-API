@@ -106,9 +106,10 @@ async function getUserInfo(db, field, value) {
     return await userCollection.findOne({ [field]: value });
 }
 
-async function getUserInfoWithLists(db, username) {
+async function getUserInfoWithLists(username) {
+    const db = await connectToMongoDB();
     const userCollection = db.collection(userListCollection);
-    return await userCollection.aggregate([
+    const value = await userCollection.aggregate([
         {
             $match: { username: username }
         },
@@ -121,6 +122,8 @@ async function getUserInfoWithLists(db, username) {
             }
         }
     ]).toArray();
+    await disconnectFromMongoDB();
+    return value
 }
 
 async function getListInfo(db, value) {
@@ -137,11 +140,9 @@ async function getProductInfo(db, value) {
 
 
 async function getAllListsByUsername(username) {
-    const db = await connectToMongoDB();
+    
 
-    const userInfoWithLists = await getUserInfoWithLists(db, username);
-
-    await disconnectFromMongoDB();
+    const userInfoWithLists = await getUserInfoWithLists(username);
 
     return userInfoWithLists[0]['lists']
 

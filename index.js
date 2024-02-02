@@ -21,9 +21,9 @@ app.get("/product/all", async function(req,res,next){
     res.json(message);
 })
 
-app.get("/list/:value", async function(req,res,next){
+/*app.get("/list/:value", async function(req,res,next){
     res.json({"as":"as"})
-})
+})*/
 
 app.post("/list/add", async function(req,res,next){
     res.json({"as":"as"})

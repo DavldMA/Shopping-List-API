@@ -30,8 +30,8 @@ app.post("/list/add", async function(req,res,next){
 })
 
 app.get("/list/all", async function(req,res,next){
-    const message = await db.getAllListsByUsername(req.query.username);
-    res.json({message});
+    const lists = await db.getAllListsByUsername(req.query.username);
+    res.json({lists});
 })
 
 app.post("/user/login", async function(req,res,next){

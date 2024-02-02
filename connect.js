@@ -70,7 +70,7 @@ async function login(user) {
     if (existingUser) {
         if (user.password === existingUser.password) {
             await disconnectFromMongoDB();
-            return { "CODE": "001" , "username:": existingUser.username };
+            return { "CODE": "001" , "username": existingUser.username };
         } else {
             await disconnectFromMongoDB();
             return { "CODE": "004" }; //

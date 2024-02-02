@@ -145,26 +145,6 @@ async function getAllListsByUsername(username) {
 
     return userInfoWithLists[0]['lists']
 
-    const user = {
-        username: 'john_doe',
-        email: 'john@example.com',
-        password: '123_Se'
-    };
-
-    const product = {
-        name: 'Milk',
-        ptName: 'Leite',
-        category: 'Dairy',
-        quantity: 2
-    };
-
-    const list = {
-        name: 'Shopping List 1',
-        users: [user.username],
-        products: [retrievedProduct.name],
-        productQuantity: [1]
-    };
-
 }
 
 module.exports = {

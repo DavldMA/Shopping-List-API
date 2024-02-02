@@ -8,16 +8,16 @@ app.get("/", function(req,res,next){
     res.json({"as":"as"})
 })
 
-app.get("/product/:value", async function(req,res,next){
+/*app.get("/product/:value", async function(req,res,next){
     res.json({"as":"as"})
-})
+})*/
 
 app.post("/product/add", async function(req,res,next){
     res.json({"as":"as"})
 })
 
 app.get("/product/all", async function(req,res,next){
-    const message = await db.getAllListsByUsername(req.body.username);
+    const message = await db.getAllProductsByUsername(req.query.username);
     res.json(message);
 })
 

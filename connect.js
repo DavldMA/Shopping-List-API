@@ -106,6 +106,25 @@ async function getUserInfo(db, field, value) {
     return await userCollection.findOne({ [field]: value });
 }
 
+async function getProductsByUser(username) {
+    const db = await connectToMongoDB();
+    const productsCollection = db.collection('products');
+
+    // Define the criteria for matching products
+    const query = {
+        $or: [
+            { user: 'none' },
+            { user: username }
+        ]
+    };
+
+    // Execute the query
+    const products = await productsCollection.find(query).toArray();
+    await disconnectFromMongoDB();
+    return products;
+}
+
+
 async function getUserInfoWithLists(username) {
     const db = await connectToMongoDB();
     const userCollection = db.collection(userListCollection);
@@ -136,7 +155,14 @@ async function getProductInfo(db, value) {
     return await productCollection.findOne({ value });
 }
 
+async function getAllProductsByUsername(username) {
+    
 
+    const userInfoWithLists = await getProductsByUser(username);
+    console.log(userInfoWithLists)
+    return userInfoWithLists
+
+}
 
 
 async function getAllListsByUsername(username) {
@@ -151,6 +177,7 @@ module.exports = {
     connectToMongoDB,
     disconnectFromMongoDB,
     getAllListsByUsername,
+    getAllProductsByUsername,
     addUser,
     login
 };

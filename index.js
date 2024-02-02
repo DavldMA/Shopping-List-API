@@ -31,6 +31,7 @@ app.post("/list/add", async function(req,res,next){
 
 app.get("/list/all", async function(req,res,next){
     const message = await db.getAllListsByUsername(req.body.username);
+    console.log(message)
     res.json(message);
 })
 

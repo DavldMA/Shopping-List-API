@@ -84,6 +84,7 @@ async function login(user) {
 
 
 async function addList(list) {
+    console.log(list)
     const parsedList = JSON.parse(list);
 
 
@@ -92,7 +93,7 @@ async function addList(list) {
         users: [list.username],
         products: parsedList.products
     };
-
+    console.log(transformedObject)
     const resultJSON = JSON.stringify(transformedObject);
     const db = await connectToMongoDB();
     const existingList = await getListInfo(db, resultJSON.name);

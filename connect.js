@@ -95,13 +95,12 @@ async function addList(list) {
 
     console.log(transformedObject);
 
-    //const resultJSON = JSON.stringify(transformedObject);
     const db = await connectToMongoDB();
-    const existingList = await getListInfo(db, 'name', resultJSON.name);
+    const existingList = await getListInfo(db, 'name', transformedObject.name);
 
     if (!existingList) {
         const listCollection = db.collection(listListCollection);
-        await listCollection.insertOne(resultJSON);
+        await listCollection.insertOne(transformedObject);
         await disconnectFromMongoDB();
         return { "CODE": "001"};
     }

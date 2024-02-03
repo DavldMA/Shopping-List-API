@@ -85,7 +85,7 @@ async function login(user) {
 
 async function addList(list) {
     const listString = JSON.stringify(list);
-
+    console.log(listString);
     const parsedList = JSON.parse(listString);
 
     const transformedObject = {

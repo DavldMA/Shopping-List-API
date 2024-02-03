@@ -98,7 +98,7 @@ async function addList(list) {
 
     const resultJSON = JSON.stringify(transformedObject);
     const db = await connectToMongoDB();
-    const existingList = await getListInfo(db, resultJSON.name);
+    const existingList = await getListInfo(db, 'name', resultJSON.name);
 
     if (!existingList) {
         const listCollection = db.collection(listListCollection);
@@ -143,10 +143,9 @@ async function getUserInfoWithLists(username) {
     return value
 }
 
-async function getListInfo(db, value) {
+async function getListInfo(db, field, value) {
     const listCollection = db.collection(listListCollection);
-    console.log(listCollection.findOne({ "name": value }))
-    return await listCollection.findOne({ "name": value });
+    return await listCollection.findOne({ [field]: value });
 }
 
 async function getAllListsByUsername(username) {

@@ -85,10 +85,12 @@ async function login(user) {
 
 async function addList(list) {
     console.log(list);
+    const listObject = JSON.parse(inputJson.list);
+
     const transformedObject = {
-        name: list.list.name,
-        users: [list.username],
-        products: list.list.products
+        name: listObject.name,
+        users: [inputJson.username],
+        products: listObject.products
     };
 
     console.log(transformedObject);

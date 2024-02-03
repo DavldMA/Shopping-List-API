@@ -84,8 +84,6 @@ async function login(user) {
 
 
 async function addList(list) {
-    console.log(list);
-
     const listString = JSON.stringify(list);
 
     const parsedList = JSON.parse(listString);
@@ -147,6 +145,7 @@ async function getUserInfoWithLists(username) {
 
 async function getListInfo(db, value) {
     const listCollection = db.collection(listListCollection);
+    console.log(listCollection.findOne({ value }))
     return await listCollection.findOne({ value });
 }
 

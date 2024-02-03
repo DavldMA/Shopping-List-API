@@ -87,11 +87,11 @@ async function addList(list) {
     const listString = JSON.stringify(list);
     console.log(listString);
     const parsedList = JSON.parse(listString);
-
+    console.log(parsedList);
     const transformedObject = {
-        name: list.list.name,
+        name: parsedList.name,
         users: [list.username],
-        products: list.list.products
+        products: parsedList.products
     };
 
     console.log(transformedObject);

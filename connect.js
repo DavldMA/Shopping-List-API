@@ -169,7 +169,7 @@ async function getAllListsByUsername(username) {
     const userInfoWithLists = await getUserInfoWithLists(username);
 
     const listsWithoutId = userInfoWithLists[0]["lists"].map(list => {
-        const { id, ...listWithoutId } = list;
+        const { _id, ...listWithoutId } = list;
         return listWithoutId;
     });
 

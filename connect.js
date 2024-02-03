@@ -166,11 +166,14 @@ async function getAllProductsByUsername(username) {
 
 
 async function getAllListsByUsername(username) {
-    
-
     const userInfoWithLists = await getUserInfoWithLists(username);
-    return userInfoWithLists[0]["lists"]
 
+    const listsWithoutId = userInfoWithLists[0]["lists"].map(list => {
+        const { id, ...listWithoutId } = list;
+        return listWithoutId;
+    });
+
+    return listsWithoutId;
 }
 
 module.exports = {

@@ -84,16 +84,20 @@ async function login(user) {
 
 
 async function addList(list) {
-    console.log(list)
-    const parsedList = JSON.parse(list);
+    console.log(list);
 
+    const listString = JSON.stringify(list);
+
+    const parsedList = JSON.parse(listString);
 
     const transformedObject = {
         name: parsedList.name,
         users: [list.username],
         products: parsedList.products
     };
-    console.log(transformedObject)
+
+    console.log(transformedObject);
+
     const resultJSON = JSON.stringify(transformedObject);
     const db = await connectToMongoDB();
     const existingList = await getListInfo(db, resultJSON.name);
@@ -109,6 +113,7 @@ async function addList(list) {
         return { "CODE": "004" }; 
     }
 }
+
 
 async function updateList(db, list) {
     //update

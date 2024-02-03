@@ -73,55 +73,39 @@ async function login(user) {
             return { "CODE": "001" , "username": existingUser.username };
         } else {
             await disconnectFromMongoDB();
-            return { "CODE": "004" }; //
+            return { "CODE": "004" }; 
         }
     } else {
         await disconnectFromMongoDB();
-        return { "CODE": "005" }; //Email not found.
+        return { "CODE": "005" }; 
     }
 }
 
 
 
-async function addList(db, list) {
+async function addList(list) {
+    const db = await connectToMongoDB();
     const existingList = await getListInfo(db, list.name);
 
     if (!existingList) {
         const listCollection = db.collection(listListCollection);
         await listCollection.insertOne(list);
+        await disconnectFromMongoDB();
+        return { "CODE": "001"};
+    }
+    else {
+        await disconnectFromMongoDB();
+        return { "CODE": "004" }; 
     }
 }
 
-async function addProduct(db, product) {
-    const existingProduct = await getProductInfo(db, product.name);
-
-    if (!existingProduct) {
-        const productCollection = db.collection(productListCollection);
-        await productCollection.insertOne(product);
-    }
+async function updateList(db, list) {
+    //update
 }
 
 async function getUserInfo(db, field, value) {
     const userCollection = db.collection(userListCollection);
     return await userCollection.findOne({ [field]: value });
-}
-
-async function getProductsByUser(username) {
-    const db = await connectToMongoDB();
-    const productsCollection = db.collection('products');
-
-    // Define the criteria for matching products
-    const query = {
-        $or: [
-            { user: 'none' },
-            { user: username }
-        ]
-    };
-
-    // Execute the query
-    const products = await productsCollection.find(query).toArray();
-    await disconnectFromMongoDB();
-    return products;
 }
 
 
@@ -150,21 +134,6 @@ async function getListInfo(db, value) {
     return await listCollection.findOne({ value });
 }
 
-async function getProductInfo(db, value) {
-    const productCollection = db.collection(productListCollection);
-    return await productCollection.findOne({ value });
-}
-
-async function getAllProductsByUsername(username) {
-    
-
-    const userInfoWithLists = await getProductsByUser(username);
-    console.log(userInfoWithLists)
-    return userInfoWithLists
-
-}
-
-
 async function getAllListsByUsername(username) {
     const userInfoWithLists = await getUserInfoWithLists(username);
 
@@ -180,7 +149,7 @@ module.exports = {
     connectToMongoDB,
     disconnectFromMongoDB,
     getAllListsByUsername,
-    getAllProductsByUsername,
     addUser,
-    login
+    login,
+    addList
 };

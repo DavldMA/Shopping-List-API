@@ -84,19 +84,16 @@ async function login(user) {
 
 
 async function addList(list) {
-    const listString = JSON.stringify(list);
-    console.log(listString);
-    const parsedList = JSON.parse(listString);
-    console.log(parsedList);
+    console.log(list);
     const transformedObject = {
-        name: parsedList.list.name,
+        name: list.list.name,
         users: [list.username],
-        products: parsedList.list.products
+        products: list.list.products
     };
 
     console.log(transformedObject);
 
-    const resultJSON = JSON.stringify(transformedObject);
+    //const resultJSON = JSON.stringify(transformedObject);
     const db = await connectToMongoDB();
     const existingList = await getListInfo(db, 'name', resultJSON.name);
 

@@ -145,8 +145,8 @@ async function getUserInfoWithLists(username) {
 
 async function getListInfo(db, value) {
     const listCollection = db.collection(listListCollection);
-    console.log(listCollection.findOne({ value }))
-    return await listCollection.findOne({ value });
+    console.log(listCollection.findOne({ "name": value }))
+    return await listCollection.findOne({ "name": value });
 }
 
 async function getAllListsByUsername(username) {

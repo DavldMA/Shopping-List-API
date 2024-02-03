@@ -89,9 +89,9 @@ async function addList(list) {
     const parsedList = JSON.parse(listString);
 
     const transformedObject = {
-        name: parsedList.name,
+        name: list.list.name,
         users: [list.username],
-        products: parsedList.products
+        products: list.list.products
     };
 
     console.log(transformedObject);

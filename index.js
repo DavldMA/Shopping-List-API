@@ -10,9 +10,8 @@ app.post("/list/update", async function(req,res,next){
 })
 
 app.post("/list/add", async function(req,res,next){
-    console.log(req.body);
     const message = await db.addList(req.body);
-    res.json({"as":"as"})
+    res.json(message)
 })
 
 app.get("/list/all", async function(req,res,next){

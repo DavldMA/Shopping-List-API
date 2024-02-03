@@ -84,12 +84,22 @@ async function login(user) {
 
 
 async function addList(list) {
+    const parsedList = JSON.parse(list);
+
+
+    const transformedObject = {
+        name: parsedList.name,
+        users: [originalObject.username],
+        products: parsedList.products
+    };
+
+    const resultJSON = JSON.stringify(transformedObject);
     const db = await connectToMongoDB();
-    const existingList = await getListInfo(db, list.name);
+    const existingList = await getListInfo(db, resultJSON.name);
 
     if (!existingList) {
         const listCollection = db.collection(listListCollection);
-        await listCollection.insertOne(list);
+        await listCollection.insertOne(resultJSON);
         await disconnectFromMongoDB();
         return { "CODE": "001"};
     }

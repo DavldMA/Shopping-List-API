@@ -89,7 +89,7 @@ async function addList(list) {
 
     const transformedObject = {
         name: parsedList.name,
-        users: [originalObject.username],
+        users: [list.username],
         products: parsedList.products
     };
 

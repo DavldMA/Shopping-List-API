@@ -108,16 +108,13 @@ async function addList(list) {
     }
 }
 
-async function removeUserFromList(list) {
-    console.log(list);
-    const listObject = JSON.parse(list.list);
-
+async function removeUserFromList(username, listname) {
     const db = await connectToMongoDB();
 
     try {
         const listCollection = db.collection(listListCollection);
 
-        const list = await listCollection.findOne({ name: listObject.name, users: list.username });
+        const list = await listCollection.findOne({ name: listname, users: username });
 
         if (!list) {
             await disconnectFromMongoDB();

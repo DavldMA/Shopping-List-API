@@ -14,10 +14,8 @@ app.post("/list/add", async function(req,res,next){
     res.json(message)
 })
 
-app.delete("/list/removelist/:info/:a", async function(req, res, next) {
-    console.log(req.params.info)
-    console.log(req.params.a)
-    const message = await db.removeUserFromList(req.params.info)
+app.delete("/list/removelist/:username/:listname", async function(req, res, next) {
+    const message = await db.removeUserFromList(req.params.username, req.params.listname)
     res.json(message)
 })
 

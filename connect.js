@@ -126,7 +126,7 @@ async function removeUserFromList(username, listname) {
         if (updatedUsers.length === 0) {
             await listCollection.deleteOne({ name: listname });
             await disconnectFromMongoDB();
-            return { "CODE": "003" };  
+            return { "CODE": "001" }; 
         } else {
             await listCollection.updateOne(
                 { name: listname },

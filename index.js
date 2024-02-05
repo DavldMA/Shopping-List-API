@@ -10,12 +10,12 @@ app.post("/list/update", async function(req,res,next){
 })
 
 app.post("/list/add", async function(req,res,next){
-    const message = await db.addList(req.params);
+    const message = await db.addList(req.body);
     res.json(message)
 })
 
 app.delete("/list/removelist", async function(req, res, next) {
-    const message = await db.removeUserFromList(req.body)
+    const message = await db.removeUserFromList(req.params)
     res.json(message)
 })
 

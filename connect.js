@@ -84,7 +84,7 @@ async function login(user) {
 
 
 async function addList(list) {
-    console.log(list);
+    
     const listObject = JSON.parse(list.list);
 
     const transformedObject = {
@@ -92,8 +92,6 @@ async function addList(list) {
         users: [list.username],
         products: listObject.products
     };
-
-    console.log(transformedObject);
 
     const db = await connectToMongoDB();
     const existingList = await getListInfo(db, 'name', transformedObject.name);
@@ -109,6 +107,44 @@ async function addList(list) {
         return { "CODE": "004" }; 
     }
 }
+
+async function removeUserFromList(list) {
+    console.log(list);
+    const listObject = JSON.parse(list.list);
+
+    const db = await connectToMongoDB();
+
+    try {
+        const listCollection = db.collection(listListCollection);
+
+        const list = await listCollection.findOne({ name: listObject.name, users: list.username });
+
+        if (!list) {
+            await disconnectFromMongoDB();
+            return { "CODE": "002" }; 
+        }
+
+        const updatedUsers = list.users.filter(user => user !== username);
+
+        if (updatedUsers.length === 0) {
+            await listCollection.deleteOne({ name: listName });
+            await disconnectFromMongoDB();
+            return { "CODE": "003" };  
+        } else {
+            await listCollection.updateOne(
+                { name: listName },
+                { $set: { users: updatedUsers } }
+            );
+            await disconnectFromMongoDB();
+            return { "CODE": "001" };
+        }
+    } catch (error) {
+        console.error("Error removing user from list:", error);
+        await disconnectFromMongoDB();
+        return { "CODE": "005" };
+    }
+}
+
 
 
 async function updateList(db, list) {
@@ -161,6 +197,7 @@ module.exports = {
     connectToMongoDB,
     disconnectFromMongoDB,
     getAllListsByUsername,
+    removeUserFromList,
     addUser,
     login,
     addList

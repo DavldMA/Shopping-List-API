@@ -14,6 +14,11 @@ app.post("/list/add", async function(req,res,next){
     res.json(message)
 })
 
+app.delete("/list/removelist", async function(req, res, next) {
+    const message = await db.removeUserFromList(req.body.username, req.body.list)
+    res.json(message)
+})
+
 app.get("/list/all", async function(req,res,next){
     const lists = await db.getAllListsByUsername(req.query.username);
     res.json({lists});

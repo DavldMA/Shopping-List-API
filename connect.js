@@ -129,7 +129,7 @@ async function removeUserFromList(username, listname) {
             return { "CODE": "003" };  
         } else {
             await listCollection.updateOne(
-                { name: listName },
+                { name: listname },
                 { $set: { users: updatedUsers } }
             );
             await disconnectFromMongoDB();

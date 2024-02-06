@@ -174,6 +174,7 @@ async function generateNewShortURL(list) {
 }
 
 async function findRedirectURL(body) {
+    console.log(body)
     var login = {
         "password" : body.password, "email": body.email
     }
@@ -181,6 +182,7 @@ async function findRedirectURL(body) {
     var message = await login(login);
     console.log(url)
     console.log(message)
+    return message
     var xd = await findRedirectURLByShortId(url);
     return xd
 }

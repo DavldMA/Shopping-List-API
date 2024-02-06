@@ -167,10 +167,10 @@ async function generateNewShortURL(list) {
             listId: lists._id,
         });
 
-        return res.status(200).json({ url: "shopping-list-api-beta.vercel.app/list/share/id/"+shortID });
+        return { url: "shopping-list-api-beta.vercel.app/list/share/id/"+shortID };
     } catch (error) {
         console.error('Error creating a new short URL:', error);
-        return res.status(500).json({ error: 'Internal server error' });
+        return { error: 'Internal server error' };
     } finally {
         await disconnectFromMongoDB();
     }

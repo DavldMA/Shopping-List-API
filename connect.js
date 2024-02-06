@@ -143,8 +143,9 @@ async function removeUserFromList(username, listname) {
     }
 }
 
-async function generateNewShortURL(req, res) {
-    var body = req.body;
+async function generateNewShortURL(list) {
+    var body = list;
+    const listObject = JSON.parse(list.list);
     console.log(body);
     body = JSON.parse(body.list);
     if (!body || !body.name) {
@@ -152,27 +153,20 @@ async function generateNewShortURL(req, res) {
     }
     const shortID = shortid();
     const db = await connectToMongoDB();
-    const list = await getListInfo(db, "name", body.name)
-    const objectIdString = list._id;
-    const startIndex = objectIdString.indexOf("'");
-    const endIndex = objectIdString.lastIndexOf("'");
-    const objectId = objectIdString.substring(startIndex + 1, endIndex);
+    const listCollection = db.collection(listListCollection);
 
-    console.log(objectId);
+    const lists = await listCollection.findOne({ name: listObject.name, users: body.username });
+    console.log(lists)
     
     try {
         const urlCollection = db.collection('url');
     
         const result = await urlCollection.insertOne({
             shortId: shortID,
-            listId: objectId,
+            listId: lists._id,
         });
-        
-        if (result && result.insertedId) {
-            return res.status(200).json({ url: "shopping-list-api-beta.vercel.app/list/share/id/"+shortID });
-        } else {
-            return res.status(500).json({ error: 'Failed to create a new short URL' });
-        }
+
+        return res.status(200).json({ url: "shopping-list-api-beta.vercel.app/list/share/id/"+shortID });
     } catch (error) {
         console.error('Error creating a new short URL:', error);
         return res.status(500).json({ error: 'Internal server error' });

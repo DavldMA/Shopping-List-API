@@ -34,7 +34,8 @@ app.delete("/list/removelist/:username/:listname", async function(req, res, next
 })
 
 app.post("/list/updatelist/", async function(req, res, next) {
-    console.log(req.body)
+    const message = await db.updateListProducts(req.body)
+    res.json(message)
 })
 
 app.get("/list/all", async function(req,res,next){

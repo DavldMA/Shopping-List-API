@@ -226,8 +226,12 @@ async function addUserToList(username, listID) {
     }
 }
 
-async function updateListProducts(username, listName, products) {
+async function updateListProducts(body) {
     try {
+        const listObject = JSON.parse(body.list);
+        var username = body.username;
+        var listName = listObject.name;
+        var products = listObject.products;
         const db = await connectToMongoDB();
         const collection = db.collection('lists');
         
@@ -332,5 +336,6 @@ module.exports = {
     login,
     addList,
     generateNewShortURL,
-    findRedirectURL
+    findRedirectURL,
+    updateListProducts
 };

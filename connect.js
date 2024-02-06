@@ -153,15 +153,19 @@ async function generateNewShortURL(req, res) {
     const shortID = shortid();
     const db = await connectToMongoDB();
     const list = await getListInfo(db, "name", body.name)
-    console.log(list)
+    const objectIdString = list._id;
+    const startIndex = objectIdString.indexOf("'");
+    const endIndex = objectIdString.lastIndexOf("'");
+    const objectId = objectIdString.substring(startIndex + 1, endIndex);
+
+    console.log(objectId);
     
     try {
         const urlCollection = db.collection('url');
     
         const result = await urlCollection.insertOne({
             shortId: shortID,
-            listId: list._id,
-            visitHistory: [],
+            listId: objectId,
         });
         
         if (result && result.insertedId) {

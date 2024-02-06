@@ -20,7 +20,7 @@ app.post("/list/share", async function(req, res, next) {
 
 app.get("/list/share/id/:id", async function(req, res, next) {
     console.log(req.params.id)
-    res.sendFile('login.html');
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
 })
 
 app.post("/list/add", async function(req,res,next){

@@ -159,17 +159,23 @@ async function findRedirectURL(body) {
     var loginCredentials = {
         "password" : body.password, "email": body.email
     }
-    var url = body.url;
-    console.log(url)
-    var message = await login(loginCredentials);
     
-    console.log(message)
-    return message
-    var xd = await findRedirectURLByShortId(url);
-    return xd
+    var message = await login(loginCredentials);
+    switch (message.CODE) {
+        case "001":
+            var url = body.url;
+            const parts = url.split('/');
+            const finalPart = parts[parts.length - 1];
+            var xd = await findRedirectURLByShortId(finalPart, message.username);
+            return xd
+            break;
+        default:
+            return message
+    }
+
 }
 
-async function findRedirectURLByShortId(shortId) {
+async function findRedirectURLByShortId(shortId, username) {
     try {
         await connectToMongoDB()
         console.log(shortId)
@@ -181,7 +187,7 @@ async function findRedirectURLByShortId(shortId) {
         const result = await collection.findOne(query);
         if (result.listId) {
 
-            return result.listId;
+            addUserToList(username, result.listId);
         } else {
             console.log(`ShortId ${shortId} not found in the database.`);
             return null;

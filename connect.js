@@ -226,6 +226,40 @@ async function addUserToList(username, listID) {
     }
 }
 
+async function updateListProducts(username, listName, products) {
+    try {
+        const db = await connectToMongoDB();
+        const collection = db.collection('lists');
+        
+        // Find the list by username and list name
+        const query = { username: username, name: listName };
+        const list = await collection.findOne(query);
+        
+        if (!list) {
+            console.log(`List ${listName} for user ${username} not found.`);
+            return { success: false, error: 'List not found' };
+        }
+        
+        // Update products array
+        const updateDoc = {
+            $set: { products: products }
+        };
+
+        const result = await collection.updateOne(query, updateDoc);
+
+        if (result.modifiedCount === 1) {
+            return { success: true };
+        } else {
+            console.log(`Failed to update products for list ${listName} for user ${username}.`);
+            return { success: false, error: 'Failed to update products' };
+        }
+    } catch (error) {
+        console.error('Error updating list products:', error);
+        return { success: false, error: 'Internal server error' };
+    } finally {
+        await disconnectFromMongoDB();
+    }
+}
 
 
 async function login(user) {

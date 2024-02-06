@@ -33,6 +33,10 @@ app.delete("/list/removelist/:username/:listname", async function(req, res, next
     res.json(message)
 })
 
+app.put("/list/updatelist/", async function(req, res, next) {
+    console.log(req.body)
+})
+
 app.get("/list/all", async function(req,res,next){
     const lists = await db.getAllListsByUsername(req.query.username);
     res.json({lists});

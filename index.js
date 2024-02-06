@@ -44,7 +44,7 @@ app.post("/user/login", async function(req,res,next){
     res.json(message);
 })
 
-app.post("/user/login/enter", async function(req,res,next){
+app.post("/list/enter", async function(req,res,next){
     const message = await db.findRedirectURL(req.body);
     res.json(message);
 })

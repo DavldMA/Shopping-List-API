@@ -9,7 +9,7 @@ app.post("/list/update", async function(req,res,next){
     res.json({"as":"as"})
 })
 
-add.post("/list/share", async function(req, res, next) {
+app.post("/list/share", async function(req, res, next) {
     const message = await db.generateNewShortURL(req, res)
     res.json(message)
 })

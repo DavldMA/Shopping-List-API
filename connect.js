@@ -156,12 +156,12 @@ async function generateNewShortURL(list) {
 
 async function findRedirectURL(body) {
     console.log(body)
-    var login = {
+    var loginCredentials = {
         "password" : body.password, "email": body.email
     }
     var url = body.url;
     console.log(url)
-    var message = await login(login);
+    var message = await login(loginCredentials);
     
     console.log(message)
     return message

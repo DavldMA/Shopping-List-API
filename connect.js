@@ -63,6 +63,7 @@ async function addUser(user) {
 }
 
 async function login(user) {
+    console.log("called")
     const db = await connectToMongoDB();
 
     const existingUser = await getUserInfo(db, 'email', user.email);

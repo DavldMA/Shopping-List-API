@@ -200,14 +200,14 @@ async function findRedirectURLByShortId(shortId, username) {
     }
 }
 
-async function addUserToList(user, listID) {
+async function addUserToList(username, listID) {
     try {
         const db = await connectToMongoDB();
         const collection = db.collection('lists');
         console.log(listID);
-        const query = { _id: listID, users: { $not: { $elemMatch: { username: user } } } }; // Check if user isn't already in the list
+        const query = { _id: listID, users: { $ne: username } }; // Check if username isn't already in the list
         const updateDoc = {
-            $push: { users: user }
+            $push: { users: username }
         };
 
         const result = await collection.updateOne(query, updateDoc);
@@ -215,7 +215,7 @@ async function addUserToList(user, listID) {
         if (result.modifiedCount === 1) {
             return { success: true };
         } else {
-            console.log(`User ${user.username} is already in the list or list with ID ${listID} not found.`);
+            console.log(`User ${username} is already in the list or list with ID ${listID} not found.`);
             return { success: false, error: 'User already in the list or list not found' };
         }
     } catch (error) {
@@ -225,6 +225,7 @@ async function addUserToList(user, listID) {
         await disconnectFromMongoDB();
     }
 }
+
 
 
 async function login(user) {

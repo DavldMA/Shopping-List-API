@@ -1,7 +1,9 @@
 const express = require("express");
+const path = require('path');
 const db = require("./connect")
 const app = express();
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
 
@@ -18,7 +20,7 @@ app.post("/list/share", async function(req, res, next) {
 
 app.get("/list/share/id/:id", async function(req, res, next) {
     console.log(req.params.id)
-    res.render(__dirname + "/public/login.html")
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
 })
 
 app.post("/list/add", async function(req,res,next){

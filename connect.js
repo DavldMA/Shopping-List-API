@@ -146,12 +146,12 @@ async function removeUserFromList(username, listname) {
 async function generateNewShortURL(req, res) {
     const body = req.body;
     console.log(body);
-    if (!body || !body.name) {
+    if (!body || !body.list.name) {
         return res.status(400).json({ error: 'url is required' });
     }
     const shortID = shortid();
     const db = await connectToMongoDB();
-    const list = db.getListInfo(db, "name", body.name)
+    const list = db.getListInfo(db, "name", body.list.name)
     console.log(list)
     
     try {

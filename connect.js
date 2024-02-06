@@ -236,7 +236,7 @@ async function updateListProducts(body) {
         const collection = db.collection('lists');
         
         // Find the list by username and list name
-        const query = { username: username, name: listName };
+        const query = { users: username, name: listName };
         const list = await collection.findOne(query);
         
         if (!list) {

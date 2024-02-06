@@ -205,7 +205,7 @@ async function addUserToList(user, listID) {
         const db = await connectToMongoDB();
         const collection = db.collection('lists');
         console.log(listID);
-        const query = { _id: listID, users: { $not: { $elemMatch: { username: user.username } } } }; // Check if user isn't already in the list
+        const query = { _id: listID, users: { $not: { $elemMatch: { username: user } } } }; // Check if user isn't already in the list
         const updateDoc = {
             $push: { users: user }
         };

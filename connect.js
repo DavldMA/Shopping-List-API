@@ -62,26 +62,6 @@ async function addUser(user) {
     }
 }
 
-async function login(user) {
-    console.log("called")
-    const db = await connectToMongoDB();
-
-    const existingUser = await getUserInfo(db, 'email', user.email);
-
-    if (existingUser) {
-        if (user.password === existingUser.password) {
-            await disconnectFromMongoDB();
-            return { "CODE": "001" , "username": existingUser.username };
-        } else {
-            await disconnectFromMongoDB();
-            return { "CODE": "004" }; 
-        }
-    } else {
-        await disconnectFromMongoDB();
-        return { "CODE": "005" }; 
-    }
-}
-
 async function addList(list) {
     
     const listObject = JSON.parse(list.list);
@@ -238,6 +218,26 @@ async function addUserToList(user, listID) {
         return { success: false, error: 'Internal server error' };
     } finally {
         await disconnectFromMongoDB();
+    }
+}
+
+async function login(user) {
+    console.log("called")
+    const db = await connectToMongoDB();
+
+    const existingUser = await getUserInfo(db, 'email', user.email);
+
+    if (existingUser) {
+        if (user.password === existingUser.password) {
+            await disconnectFromMongoDB();
+            return { "CODE": "001" , "username": existingUser.username };
+        } else {
+            await disconnectFromMongoDB();
+            return { "CODE": "004" }; 
+        }
+    } else {
+        await disconnectFromMongoDB();
+        return { "CODE": "005" }; 
     }
 }
 

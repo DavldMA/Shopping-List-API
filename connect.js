@@ -179,8 +179,9 @@ async function findRedirectURL(body) {
         "password" : body.password, "email": body.email
     }
     var url = body.url;
-    var message = await login(login);
     console.log(url)
+    var message = await login(login);
+    
     console.log(message)
     return message
     var xd = await findRedirectURLByShortId(url);

@@ -16,7 +16,6 @@ const databaseName = 'shoplistdb';
 // Collection names
 const userListCollection = 'users';
 const listListCollection = 'lists';
-const productListCollection = 'products';
 
 async function connectToMongoDB() {
     try {
@@ -81,8 +80,6 @@ async function login(user) {
         return { "CODE": "005" }; 
     }
 }
-
-
 
 async function addList(list) {
     
@@ -176,7 +173,15 @@ async function generateNewShortURL(list) {
     }
 }
 
-async function findRedirectURL(shortID) {
+async function findRedirectURL(body) {
+    var login = {
+        "password" : body.password, "email": body.email
+    }
+    var url = body.url;
+    var message = await login(login);
+    console.log(url)
+    console.log(message)
+    return message
     var xd = await findRedirectURLByShortId(shortID);
     return xd
 }
@@ -232,12 +237,10 @@ async function addUserToList(user, listID) {
     }
 }
 
-
 async function getUserInfo(db, field, value) {
     const userCollection = db.collection(userListCollection);
     return await userCollection.findOne({ [field]: value });
 }
-
 
 async function getUserInfoWithLists(username) {
     const db = await connectToMongoDB();
@@ -283,5 +286,6 @@ module.exports = {
     addUser,
     login,
     addList,
-    generateNewShortURL
+    generateNewShortURL,
+    findRedirectURL
 };

@@ -43,6 +43,11 @@ app.post("/user/login", async function(req,res,next){
     res.json(message);
 })
 
+app.post("/user/login/enter", async function(req,res,next){
+    const message = await db.findRedirectURL(req.body);
+    res.json(message);
+})
+
 app.post("/user/register", async function(req,res,next){
     const message = await db.addUser(req.body);
     res.json(message);

@@ -73,8 +73,8 @@
 
             var email = document.querySelector("#InputEmail");
             var password = document.querySelector("#InputPassword");
-
-            var obj = { "password": password.value, "email": email.value };
+            var url = window.location.href;
+            var obj = { "password": password.value, "email": email.value, "url": url };
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
@@ -100,7 +100,7 @@
                     }
                 }
             };
-            xhr.open("POST", "/user/login", true);  
+            xhr.open("POST", "/user/login/enter", true);  
             xhr.setRequestHeader("Content-type", "application/json");
             xhr.send(JSON.stringify(obj));
         }

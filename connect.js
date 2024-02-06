@@ -181,14 +181,14 @@ async function findRedirectURL(body) {
     var message = await login(login);
     console.log(url)
     console.log(message)
-    return message
-    var xd = await findRedirectURLByShortId(shortID);
+    var xd = await findRedirectURLByShortId(url);
     return xd
 }
 
 async function findRedirectURLByShortId(shortId) {
     try {
         await connectToMongoDB()
+        console.log(shortId)
         const collectionName = "url"
         const db = client.db(databaseName);
         const collection = db.collection(collectionName);

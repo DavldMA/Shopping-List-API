@@ -145,8 +145,8 @@ async function removeUserFromList(username, listname) {
 
 async function generateNewShortURL(list) {
     var body = list;
-    const listObject = JSON.parse(list.list);
     console.log(body);
+
     body = JSON.parse(body.list);
     if (!body || !body.name) {
         return res.status(400).json({ error: 'url is required' });

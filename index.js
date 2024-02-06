@@ -9,6 +9,11 @@ app.post("/list/update", async function(req,res,next){
     res.json({"as":"as"})
 })
 
+add.post("/list/share", async function(req, res, next) {
+    const message = await db.generateNewShortURL(req, res)
+    res.json(message)
+})
+
 app.post("/list/add", async function(req,res,next){
     const message = await db.addList(req.body);
     res.json(message)

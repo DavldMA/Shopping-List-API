@@ -1,4 +1,5 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const shortid = require("shortid");
 require("dotenv").config();
 
 const uri = `mongodb+srv://${process.env.USERNAME_MONGO_DB}:${process.env.PASSWORD_MONGO_DB}@cluster0.mxvkcnv.mongodb.net/?retryWrites=true&w=majority`;
@@ -142,11 +143,96 @@ async function removeUserFromList(username, listname) {
     }
 }
 
+async function generateNewShortURL(req, res) {
+    const body = req.body;
+    console.log(body);
+    if (!body || !body.name) {
+        return res.status(400).json({ error: 'url is required' });
+    }
 
-
-async function updateList(db, list) {
-    //update
+    const shortID = shortid();
+    const db = await connectToMongoDB();
+    const list = db.getListInfo(db, "name", body.name)
+    console.log(list)
+    
+    try {
+        const urlCollection = db.collection('url');
+    
+        const result = await urlCollection.insertOne({
+            shortId: shortID,
+            listId: list._id,
+            visitHistory: [],
+        });
+        
+        if (result && result.insertedId) {
+            return res.status(200).json({ url: "shopping-list-api-beta.vercel.app/list/share/id/"+shortID });
+        } else {
+            return res.status(500).json({ error: 'Failed to create a new short URL' });
+        }
+    } catch (error) {
+        console.error('Error creating a new short URL:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    } finally {
+        await disconnectFromMongoDB();
+    }
 }
+
+async function findRedirectURL(shortID) {
+    var xd = await findRedirectURLByShortId(shortID);
+    return xd
+}
+
+async function findRedirectURLByShortId(shortId) {
+    try {
+        await connectToMongoDB()
+        const collectionName = "url"
+        const db = client.db(databaseName);
+        const collection = db.collection(collectionName);
+
+        const query = { shortId };
+        const result = await collection.findOne(query);
+        if (result.listId) {
+
+            return result.listId;
+        } else {
+            console.log(`ShortId ${shortId} not found in the database.`);
+            return null;
+        }
+    } catch (err) {
+        console.error('Error finding redirect URL:', err);
+        return null;
+    }
+    finally{
+        await disconnectFromMongoDB();
+    }
+}
+
+async function addUserToList(user, listID) {
+    try {
+        const db = await connectToMongoDB();
+        const collection = db.collection('list');
+
+        const query = { _id: listID };
+        const updateDoc = {
+            $push: { users: user }
+        };
+
+        const result = await collection.updateOne(query, updateDoc);
+
+        if (result.modifiedCount === 1) {
+            return { success: true };
+        } else {
+            console.log(`List with ID ${listID} not found.`);
+            return { success: false, error: 'List not found' };
+        }
+    } catch (error) {
+        console.error('Error adding user to list:', error);
+        return { success: false, error: 'Internal server error' };
+    } finally {
+        await disconnectFromMongoDB();
+    }
+}
+
 
 async function getUserInfo(db, field, value) {
     const userCollection = db.collection(userListCollection);
@@ -197,5 +283,6 @@ module.exports = {
     removeUserFromList,
     addUser,
     login,
-    addList
+    addList,
+    generateNewShortURL
 };

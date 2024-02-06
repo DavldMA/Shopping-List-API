@@ -205,7 +205,7 @@ async function addUserToList(user, listID) {
         const db = await connectToMongoDB();
         const collection = db.collection('lists');
         console.log(listID);
-        const query = { _id: listID };
+        const query = { _id: listID, users: { $not: { $elemMatch: { username: user.username } } } }; // Check if user isn't already in the list
         const updateDoc = {
             $push: { users: user }
         };
@@ -215,8 +215,8 @@ async function addUserToList(user, listID) {
         if (result.modifiedCount === 1) {
             return { success: true };
         } else {
-            console.log(`List with ID ${listID} not found.`);
-            return { success: false, error: 'List not found' };
+            console.log(`User ${user.username} is already in the list or list with ID ${listID} not found.`);
+            return { success: false, error: 'User already in the list or list not found' };
         }
     } catch (error) {
         console.error('Error adding user to list:', error);
@@ -225,6 +225,7 @@ async function addUserToList(user, listID) {
         await disconnectFromMongoDB();
     }
 }
+
 
 async function login(user) {
     console.log("called")

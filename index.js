@@ -33,7 +33,7 @@ app.delete("/list/removelist/:username/:listname", async function(req, res, next
     res.json(message)
 })
 
-app.put("/list/updatelist/", async function(req, res, next) {
+app.post("/list/updatelist/", async function(req, res, next) {
     console.log(req.body)
 })
 

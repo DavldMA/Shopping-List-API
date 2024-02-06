@@ -154,7 +154,7 @@ async function generateNewShortURL(list) {
     const shortID = shortid();
     const db = await connectToMongoDB();
     const listCollection = db.collection(listListCollection);
-
+    console.log(listObject.name)
     const lists = await listCollection.findOne({ name: listObject.name, users: body.username });
     console.log(lists)
     

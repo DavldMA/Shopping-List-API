@@ -168,7 +168,6 @@ async function findRedirectURL(body) {
             const finalPart = parts[parts.length - 1];
             var xd = await findRedirectURLByShortId(finalPart, message.username);
             return xd
-            break;
         default:
             return message
     }
@@ -187,7 +186,7 @@ async function findRedirectURLByShortId(shortId, username) {
         const result = await collection.findOne(query);
         if (result.listId) {
 
-            addUserToList(username, result.listId);
+            return await addUserToList(username, result.listId);
         } else {
             console.log(`ShortId ${shortId} not found in the database.`);
             return null;

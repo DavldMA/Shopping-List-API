@@ -4,6 +4,8 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+
+
 app.post("/list/update", async function(req,res,next){
     const message = await db.addList(req.body);
     res.json({"as":"as"})
@@ -12,6 +14,10 @@ app.post("/list/update", async function(req,res,next){
 app.post("/list/share", async function(req, res, next) {
     const message = await db.generateNewShortURL(req.body)
     res.json(message)
+})
+
+app.get("/list/share/id/:id", async function(req, res, next) {
+    console.log(req.params.id)
 })
 
 app.post("/list/add", async function(req,res,next){

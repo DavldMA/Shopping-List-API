@@ -148,7 +148,7 @@ async function generateNewShortURL(list) {
     console.log(body);
     const listObject = JSON.parse(list.list);
     console.log(body);
-    body2 = JSON.parse(body.list);
+    var body2 = JSON.parse(body.list);
     if (!body || !body2.name) {
         return res.status(400).json({ error: 'url is required' });
     }

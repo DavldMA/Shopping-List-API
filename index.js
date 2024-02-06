@@ -18,6 +18,7 @@ app.post("/list/share", async function(req, res, next) {
 
 app.get("/list/share/id/:id", async function(req, res, next) {
     console.log(req.params.id)
+    res.send(__dirname + "/public/login.html")
 })
 
 app.post("/list/add", async function(req,res,next){

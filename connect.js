@@ -152,7 +152,7 @@ async function generateNewShortURL(req, res) {
     }
     const shortID = shortid();
     const db = await connectToMongoDB();
-    const list = db.getListInfo(db, "name", body.name)
+    const list = await db.getListInfo(db, "name", body.name)
     console.log(list)
     
     try {

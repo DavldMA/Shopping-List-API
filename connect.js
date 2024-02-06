@@ -145,7 +145,7 @@ async function generateNewShortURL(list) {
             listId: lists._id,
         });
 
-        return { "CODE": "001", "url": "shopping-list-api-beta.vercel.app/list/share/id/"+shortID };
+        return { "CODE": "001", "url": shortID };
     } catch (error) {
         console.error('Error creating a new short URL:', error);
         return { "CODE": "002" };

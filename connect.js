@@ -251,12 +251,7 @@ async function updateListProducts(body) {
 
         const result = await collection.updateOne(query, updateDoc);
 
-        if (result.modifiedCount === 1) {
-            return { success: true };
-        } else {
-            console.log(`Failed to update products for list ${listName} for user ${username}.`);
-            return { success: false, error: 'Failed to update products' };
-        }
+        return { "CODE": "001"};;
     } catch (error) {
         console.error('Error updating list products:', error);
         return { success: false, error: 'Internal server error' };

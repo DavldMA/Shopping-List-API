@@ -203,7 +203,7 @@ async function findRedirectURLByShortId(shortId, username) {
 async function addUserToList(user, listID) {
     try {
         const db = await connectToMongoDB();
-        const collection = db.collection('list');
+        const collection = db.collection('lists');
         console.log(listID);
         const query = { _id: listID };
         const updateDoc = {

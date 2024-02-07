@@ -14,8 +14,8 @@ This is a school project aimed at creating a robust API using Express.js and Mon
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/express-mongodb-api.git
-cd express-mongodb-api
+git clone [https://github.com/yourusername/express-mongodb-api.git](https://github.com/DavldMA/Shopping-List-API.git)
+code Shopping-List-API
 ```
 
 2. Install dependencies:
@@ -27,12 +27,12 @@ npm install
 3. Set up MongoDB:
 
    - Make sure you have MongoDB installed and running.
-   - Configure MongoDB connection settings in `config.js`.
+   - Create and configure MongoDB connection settings in `.env`.
 
 4. Start the server:
 
 ```bash
-npm start
+node main.js
 ```
 
 ## Contributing

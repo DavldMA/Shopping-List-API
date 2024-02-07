@@ -1,5 +1,5 @@
 # Shopping-List-API
-This is a school project aimed at creating a robust API using Express.js and MongoDB for managing users and shopping lists. The API will serve as a backend for another project, providing endpoints to perform CRUD operations on users and their associated shopping lists. Additionally, the API supports generating shareable links for shopping lists.
+This is a school project aimed at creating a robust API using Express.js and MongoDB for managing users and shopping lists. The API will serve as a backend for another [project](https://github.com/DavldMA/Shopping-List.git), providing endpoints to perform CRUD operations on users and their associated shopping lists. Additionally, the API supports generating shareable links for shopping lists.
 
 ## Features
 

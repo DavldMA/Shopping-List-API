@@ -14,14 +14,14 @@ This is a school project aimed at creating a robust API using Express.js and Mon
 1. Clone the repository:
 
 ```bash
-git clone [https://github.com/yourusername/express-mongodb-api.git](https://github.com/DavldMA/Shopping-List-API.git)
+git clone https://github.com/DavldMA/Shopping-List-API.git
 code Shopping-List-API
 ```
 
 2. Install dependencies:
 
 ```bash
-npm install
+npm install mongodb express path shortid dotenv
 ```
 
 3. Set up MongoDB:

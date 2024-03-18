@@ -36,7 +36,11 @@ node main.js
 ```
 
 ## Showcase
-soon
+
+
+https://github.com/DavldMA/Shopping-List-API/assets/121316464/4b897093-912b-4315-9dca-ff6f44e1ea1b
+
+
 
 ## Contributing
 
